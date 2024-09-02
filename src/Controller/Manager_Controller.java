@@ -1,18 +1,13 @@
 package Controller;
 
 import Model.Manager;
-import Model.Referee;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
 public class Manager_Controller {
 
-    private Map<String, Referee> referees = new HashMap<>();
     private Map<String, Manager> managers = new HashMap<>();
-    private List<String> refereesNamesAndIdentifier = new ArrayList<>(); // para colocar na JComboBox
     private Manager loggedManager = null;
 
     public Manager getLoggedManager() {
@@ -22,21 +17,9 @@ public class Manager_Controller {
     public boolean hasRegisteredUsers(){
         return !managers.isEmpty();
     }
-    
-    private boolean isRefereeRegistered(String cpf) {
-        return referees.containsKey(cpf);
-    }
 
     private boolean isManagerRegistered(String cpf) {
         return managers.containsKey(cpf);
-    }
-    
-    public boolean addNewReferee(String cpf, String name, int totalGamesOfficiated) {
-        if (!isRefereeRegistered(cpf)) {
-            referees.put(cpf, new Referee(cpf, name, totalGamesOfficiated));
-            return true;
-        }
-        return false;
     }
 
     public boolean signUp(String cpf, String name, String password) {
@@ -64,6 +47,4 @@ public class Manager_Controller {
         }
         return false;
     }
-    
-    
 }

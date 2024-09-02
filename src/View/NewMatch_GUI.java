@@ -5,6 +5,8 @@
  */
 package View;
 
+import Model.Match;
+import Model.Referee;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,11 @@ public class NewMatch_GUI extends javax.swing.JFrame {
      */
     public NewMatch_GUI() {
         initComponents();
+        refereesList_cbx.removeAllItems();
+        String [] refereesNamesAndIdentifiers = main.Main.refereeManager.getRefereesNamesAndIdentifier();
+        for (String nameAndIdentifier : refereesNamesAndIdentifiers) {
+            refereesList_cbx.addItem(nameAndIdentifier);
+        }
     }
 
     /**
@@ -33,6 +40,15 @@ public class NewMatch_GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        location_lbl = new javax.swing.JLabel();
+        guest_lbl = new javax.swing.JLabel();
+        home_txt = new javax.swing.JTextField();
+        home_lbl = new javax.swing.JLabel();
+        guest_txt = new javax.swing.JTextField();
+        location_txt = new javax.swing.JTextField();
+        refereesList_cbx = new javax.swing.JComboBox();
+        whichReferee_lbl = new javax.swing.JLabel();
+        send_btn = new javax.swing.JButton();
         NewMatchBG_lbl = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mainMenuMenu_btn = new javax.swing.JMenu();
@@ -54,6 +70,67 @@ public class NewMatch_GUI extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setLayout(null);
+
+        location_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        location_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        location_lbl.setText("Localizacao:");
+        jPanel1.add(location_lbl);
+        location_lbl.setBounds(190, 210, 190, 30);
+
+        guest_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        guest_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        guest_lbl.setText("Time Visitante:");
+        jPanel1.add(guest_lbl);
+        guest_lbl.setBounds(30, 140, 190, 30);
+
+        home_txt.setText("Time Mandante");
+        jPanel1.add(home_txt);
+        home_txt.setBounds(30, 100, 440, 30);
+
+        home_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        home_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        home_lbl.setText("Time Mandante:");
+        jPanel1.add(home_lbl);
+        home_lbl.setBounds(30, 70, 190, 30);
+
+        guest_txt.setText("Time Visitante");
+        jPanel1.add(guest_txt);
+        guest_txt.setBounds(30, 170, 440, 30);
+
+        location_txt.setText("Localizacao");
+        location_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                location_txtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(location_txt);
+        location_txt.setBounds(190, 240, 280, 30);
+
+        refereesList_cbx.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        refereesList_cbx.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2" }));
+        refereesList_cbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refereesList_cbxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(refereesList_cbx);
+        refereesList_cbx.setBounds(190, 310, 280, 30);
+
+        whichReferee_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        whichReferee_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        whichReferee_lbl.setText("Arbitro:");
+        jPanel1.add(whichReferee_lbl);
+        whichReferee_lbl.setBounds(190, 280, 130, 30);
+
+        send_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        send_btn.setText("ENVIAR");
+        send_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                send_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(send_btn);
+        send_btn.setBounds(270, 370, 150, 50);
 
         NewMatchBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AddNewMatch.png"))); // NOI18N
         jPanel1.add(NewMatchBG_lbl);
@@ -225,6 +302,26 @@ public class NewMatch_GUI extends javax.swing.JFrame {
         Model.Funcs_DAO.changeScreen(this, new MainMenu_GUI());
     }//GEN-LAST:event_mainMenu_btnActionPerformed
 
+    private void refereesList_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refereesList_cbxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refereesList_cbxActionPerformed
+
+    private void send_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_btnActionPerformed
+        try {
+            String selectedReferee = (String) refereesList_cbx.getSelectedItem();
+            String refereesCpf = main.Main.refereeManager.extractIdentifier(selectedReferee);
+            Referee referee = main.Main.refereeManager.getReferee(refereesCpf);
+            referee.addNewMatch(new Match(location_txt.getText(), home_txt.getText(), guest_txt.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO CADASTRAR PARTIDA!\nOcorreu um erro ao cadastrar partida, revise as informacoes!\nCodigo do erro: " + e);
+        }
+        
+    }//GEN-LAST:event_send_btnActionPerformed
+
+    private void location_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_location_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_location_txtActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -283,15 +380,24 @@ public class NewMatch_GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem addReferee_btn;
     private javax.swing.JMenu exitMenu_btn;
     private javax.swing.JMenuItem exit_btn;
+    private javax.swing.JLabel guest_lbl;
+    private javax.swing.JTextField guest_txt;
+    private javax.swing.JLabel home_lbl;
+    private javax.swing.JTextField home_txt;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel location_lbl;
+    private javax.swing.JTextField location_txt;
     private javax.swing.JMenu logoutMenu_btn;
     private javax.swing.JMenuItem logout_btn;
     private javax.swing.JMenu mainMenuMenu_btn;
     private javax.swing.JMenuItem mainMenu_btn;
     private javax.swing.JMenu matches_btn;
     private javax.swing.JMenuItem notePad_btn;
+    public static javax.swing.JComboBox refereesList_cbx;
     private javax.swing.JMenu referees_btn;
+    public static javax.swing.JButton send_btn;
     private javax.swing.JMenu toolsMenu_btn;
+    private javax.swing.JLabel whichReferee_lbl;
     // End of variables declaration//GEN-END:variables
 }

@@ -61,15 +61,15 @@ public class NewReferee_GUI extends javax.swing.JFrame {
 
         cpf_txt.setText("CPF");
         jPanel1.add(cpf_txt);
-        cpf_txt.setBounds(170, 120, 280, 30);
+        cpf_txt.setBounds(170, 100, 280, 30);
 
         totalGamesOfficiated_txt.setText("Total De Partidas Apitadas");
         jPanel1.add(totalGamesOfficiated_txt);
-        totalGamesOfficiated_txt.setBounds(170, 220, 280, 30);
+        totalGamesOfficiated_txt.setBounds(170, 200, 280, 30);
 
         name_txt.setText("Nome");
         jPanel1.add(name_txt);
-        name_txt.setBounds(170, 170, 280, 30);
+        name_txt.setBounds(170, 150, 280, 30);
 
         add_btn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         add_btn.setText("ADICIONAR");
@@ -79,7 +79,7 @@ public class NewReferee_GUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(add_btn);
-        add_btn.setBounds(170, 280, 280, 30);
+        add_btn.setBounds(170, 250, 280, 30);
 
         NewRefereeBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/AddNewReferee.png"))); // NOI18N
         jPanel1.add(NewRefereeBG_lbl);
@@ -255,7 +255,7 @@ public class NewReferee_GUI extends javax.swing.JFrame {
         try {
             String totalGamesResponse = totalGamesOfficiated_txt.getText();
             int totalGamesOfficiated = Integer.parseInt(totalGamesResponse);
-            if (main.Main.manager.addNewReferee(cpf_txt.getText(), name_txt.getText(), totalGamesOfficiated)){
+            if (main.Main.refereeManager.addNewReferee(cpf_txt.getText(), name_txt.getText(), totalGamesOfficiated)){
                 JOptionPane.showMessageDialog(null, "ARBITRO ADICIONADO COM SUCESSO AO SISTEMA!");
                 Model.Funcs_DAO.changeScreen(this, new MainMenu_GUI());
             } else {
