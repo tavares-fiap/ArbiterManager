@@ -5,6 +5,11 @@
  */
 package View;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sapat
@@ -29,6 +34,21 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         ReadUpdateDeleteRefereeBG_lbl = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mainMenuMenu_btn = new javax.swing.JMenu();
+        mainMenu_btn = new javax.swing.JMenuItem();
+        toolsMenu_btn = new javax.swing.JMenu();
+        notePad_btn = new javax.swing.JMenuItem();
+        referees_btn = new javax.swing.JMenu();
+        addReferee_btn = new javax.swing.JMenuItem();
+        ReadUpdateDeleteReferee_btn = new javax.swing.JMenuItem();
+        matches_btn = new javax.swing.JMenu();
+        addMatch_btn = new javax.swing.JMenuItem();
+        ReadUpdateDeleteMatch_btn = new javax.swing.JMenuItem();
+        logoutMenu_btn = new javax.swing.JMenu();
+        logout_btn = new javax.swing.JMenuItem();
+        exitMenu_btn = new javax.swing.JMenu();
+        exit_btn = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -50,6 +70,108 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        mainMenuMenu_btn.setText("Menu");
+
+        mainMenu_btn.setText("Voltar ao Menu Principal");
+        mainMenu_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainMenu_btnActionPerformed(evt);
+            }
+        });
+        mainMenuMenu_btn.add(mainMenu_btn);
+
+        jMenuBar1.add(mainMenuMenu_btn);
+
+        toolsMenu_btn.setText("Ferramentas");
+
+        notePad_btn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        notePad_btn.setText("Bloco de notas");
+        notePad_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                notePad_btnActionPerformed(evt);
+            }
+        });
+        toolsMenu_btn.add(notePad_btn);
+
+        jMenuBar1.add(toolsMenu_btn);
+
+        referees_btn.setText("Arbitros");
+
+        addReferee_btn.setText("Cadstrar");
+        addReferee_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addReferee_btnActionPerformed(evt);
+            }
+        });
+        referees_btn.add(addReferee_btn);
+
+        ReadUpdateDeleteReferee_btn.setText("Consultar/Alterar/Excluir");
+        ReadUpdateDeleteReferee_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReadUpdateDeleteReferee_btnActionPerformed(evt);
+            }
+        });
+        referees_btn.add(ReadUpdateDeleteReferee_btn);
+
+        jMenuBar1.add(referees_btn);
+
+        matches_btn.setText("Partidas");
+
+        addMatch_btn.setText("Adicionar Nova Partida");
+        addMatch_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMatch_btnActionPerformed(evt);
+            }
+        });
+        matches_btn.add(addMatch_btn);
+
+        ReadUpdateDeleteMatch_btn.setText("Consultar/Alterar/Excluir");
+        ReadUpdateDeleteMatch_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReadUpdateDeleteMatch_btnActionPerformed(evt);
+            }
+        });
+        matches_btn.add(ReadUpdateDeleteMatch_btn);
+
+        jMenuBar1.add(matches_btn);
+
+        logoutMenu_btn.setText("Logout");
+        logoutMenu_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutMenu_btnActionPerformed(evt);
+            }
+        });
+
+        logout_btn.setText("Realizar Logout");
+        logout_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logout_btnActionPerformed(evt);
+            }
+        });
+        logoutMenu_btn.add(logout_btn);
+
+        jMenuBar1.add(logoutMenu_btn);
+
+        exitMenu_btn.setText("Sair");
+        exitMenu_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenu_btnActionPerformed(evt);
+            }
+        });
+
+        exit_btn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        exit_btn.setText("Fechar");
+        exit_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit_btnActionPerformed(evt);
+            }
+        });
+        exitMenu_btn.add(exit_btn);
+
+        jMenuBar1.add(exitMenu_btn);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -61,9 +183,58 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(500, 479));
+        setSize(new java.awt.Dimension(500, 500));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mainMenu_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenu_btnActionPerformed
+        Model.Funcs_DAO.changeScreen(this, new MainMenu_GUI());
+    }//GEN-LAST:event_mainMenu_btnActionPerformed
+
+    private void notePad_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notePad_btnActionPerformed
+        try {
+            Runtime.getRuntime().exec("cmd.exe /c start notepad.exe");
+        } catch (IOException ex) {
+            Logger.getLogger(MainMenu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_notePad_btnActionPerformed
+
+    private void addReferee_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferee_btnActionPerformed
+        Model.Funcs_DAO.changeScreen(this, new NewReferee_GUI());
+    }//GEN-LAST:event_addReferee_btnActionPerformed
+
+    private void ReadUpdateDeleteReferee_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadUpdateDeleteReferee_btnActionPerformed
+
+    }//GEN-LAST:event_ReadUpdateDeleteReferee_btnActionPerformed
+
+    private void addMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMatch_btnActionPerformed
+        Model.Funcs_DAO.changeScreen(this, new NewMatch_GUI());
+    }//GEN-LAST:event_addMatch_btnActionPerformed
+
+    private void ReadUpdateDeleteMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadUpdateDeleteMatch_btnActionPerformed
+        Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteMatch_GUI());
+    }//GEN-LAST:event_ReadUpdateDeleteMatch_btnActionPerformed
+
+    private void logout_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_btnActionPerformed
+        if (main.Main.manager.logout()) {
+            JOptionPane.showMessageDialog(null, "LOGOUT REALIZADO COM SUCESSO!");
+            Model.Funcs_DAO.changeScreen(this, new SetUp_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "IMPOSSIVEL FAZER O LOGOUT!");
+        }
+    }//GEN-LAST:event_logout_btnActionPerformed
+
+    private void logoutMenu_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenu_btnActionPerformed
+
+    }//GEN-LAST:event_logoutMenu_btnActionPerformed
+
+    private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_btnActionPerformed
+        Model.Funcs_DAO.exit();
+    }//GEN-LAST:event_exit_btnActionPerformed
+
+    private void exitMenu_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenu_btnActionPerformed
+
+    }//GEN-LAST:event_exitMenu_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,7 +279,22 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ReadUpdateDeleteMatch_btn;
     private javax.swing.JLabel ReadUpdateDeleteRefereeBG_lbl;
+    private javax.swing.JMenuItem ReadUpdateDeleteReferee_btn;
+    private javax.swing.JMenuItem addMatch_btn;
+    private javax.swing.JMenuItem addReferee_btn;
+    private javax.swing.JMenu exitMenu_btn;
+    private javax.swing.JMenuItem exit_btn;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenu logoutMenu_btn;
+    private javax.swing.JMenuItem logout_btn;
+    private javax.swing.JMenu mainMenuMenu_btn;
+    private javax.swing.JMenuItem mainMenu_btn;
+    private javax.swing.JMenu matches_btn;
+    private javax.swing.JMenuItem notePad_btn;
+    private javax.swing.JMenu referees_btn;
+    private javax.swing.JMenu toolsMenu_btn;
     // End of variables declaration//GEN-END:variables
 }

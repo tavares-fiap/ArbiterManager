@@ -16,6 +16,12 @@ public class Manager{
     public String getPassword() {
         return password;
     }
+
+    public String getName() {
+        return name;
+    }
+    
+    
     
     
 }

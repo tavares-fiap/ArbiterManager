@@ -5,6 +5,8 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sapat
@@ -28,27 +30,49 @@ public class SetUp_GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        login_btn = new javax.swing.JButton();
+        singUp_btn = new javax.swing.JButton();
+        exit_btn = new javax.swing.JButton();
         SetUpBG_lbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        SetUpBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/SetUp.png"))); // NOI18N
+        jPanel1.setLayout(null);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(SetUpBG_lbl)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(SetUpBG_lbl)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        login_btn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        login_btn.setText("LOGAR");
+        login_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                login_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(login_btn);
+        login_btn.setBounds(170, 180, 180, 30);
+
+        singUp_btn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        singUp_btn.setText("CADASTRAR");
+        singUp_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                singUp_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(singUp_btn);
+        singUp_btn.setBounds(170, 240, 180, 30);
+
+        exit_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        exit_btn.setText("SAIR");
+        exit_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit_btn);
+        exit_btn.setBounds(390, 460, 90, 25);
+
+        SetUpBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/SetUp.png"))); // NOI18N
+        jPanel1.add(SetUpBG_lbl);
+        SetUpBG_lbl.setBounds(0, 0, 500, 500);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,6 +88,23 @@ public class SetUp_GUI extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(500, 500));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
+        if (main.Main.manager.hasRegisteredUsers()){
+            new Login_GUI().setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum gerente cadastrado, impossivel fazer Login.");
+        }
+    }//GEN-LAST:event_login_btnActionPerformed
+
+    private void singUp_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singUp_btnActionPerformed
+        Model.Funcs_DAO.changeScreen(this, new SignUp_GUI());
+    }//GEN-LAST:event_singUp_btnActionPerformed
+
+    private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_btnActionPerformed
+        Model.Funcs_DAO.exit();
+    }//GEN-LAST:event_exit_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -102,6 +143,9 @@ public class SetUp_GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel SetUpBG_lbl;
+    public static javax.swing.JButton exit_btn;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton login_btn;
+    private javax.swing.JButton singUp_btn;
     // End of variables declaration//GEN-END:variables
 }

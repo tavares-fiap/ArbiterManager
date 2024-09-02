@@ -46,7 +46,7 @@ public class Splash_GUI extends javax.swing.JFrame {
                             sleep(3000);
 
                             new SetUp_GUI().setVisible(true);
-                            Splash_GUI.this.dispose();
+                            dispose();
                         }
 
                     } catch (InterruptedException ex) {

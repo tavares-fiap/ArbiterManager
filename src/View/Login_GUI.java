@@ -5,6 +5,8 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sapat
@@ -28,23 +30,59 @@ public class Login_GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        goBack_btn = new javax.swing.JButton();
+        login_btn = new javax.swing.JButton();
+        password_txt = new javax.swing.JPasswordField();
+        cpf_txt = new javax.swing.JTextField();
+        exit_btn = new javax.swing.JButton();
         LoginBG_lbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        LoginBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Login.png"))); // NOI18N
+        jPanel1.setLayout(null);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LoginBG_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LoginBG_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        goBack_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        goBack_btn.setText("VOLTAR");
+        goBack_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBack_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(goBack_btn);
+        goBack_btn.setBounds(390, 420, 90, 25);
+
+        login_btn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        login_btn.setText("LOGIN");
+        login_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                login_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(login_btn);
+        login_btn.setBounds(170, 260, 280, 30);
+
+        password_txt.setText("password");
+        jPanel1.add(password_txt);
+        password_txt.setBounds(170, 200, 280, 30);
+
+        cpf_txt.setText("CPF");
+        jPanel1.add(cpf_txt);
+        cpf_txt.setBounds(170, 140, 280, 30);
+
+        exit_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        exit_btn.setText("SAIR");
+        exit_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit_btn);
+        exit_btn.setBounds(390, 460, 90, 25);
+
+        LoginBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Login.png"))); // NOI18N
+        jPanel1.add(LoginBG_lbl);
+        LoginBG_lbl.setBounds(0, 0, 500, 500);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,6 +98,23 @@ public class Login_GUI extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(500, 500));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void goBack_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBack_btnActionPerformed
+        Model.Funcs_DAO.changeScreen(this, new SetUp_GUI());
+    }//GEN-LAST:event_goBack_btnActionPerformed
+
+    private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
+        if (main.Main.manager.login(cpf_txt.getText(), password_txt.getText())){
+            JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO!");
+            Model.Funcs_DAO.changeScreen(this, new MainMenu_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "LOGIN NAO REALIZADO!\nVerifique as informacoes!");
+        }
+    }//GEN-LAST:event_login_btnActionPerformed
+
+    private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_btnActionPerformed
+        Model.Funcs_DAO.exit();
+    }//GEN-LAST:event_exit_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -99,6 +154,11 @@ public class Login_GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LoginBG_lbl;
+    private javax.swing.JTextField cpf_txt;
+    public static javax.swing.JButton exit_btn;
+    public static javax.swing.JButton goBack_btn;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton login_btn;
+    private javax.swing.JPasswordField password_txt;
     // End of variables declaration//GEN-END:variables
 }

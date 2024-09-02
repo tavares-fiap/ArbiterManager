@@ -5,6 +5,8 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sapat
@@ -28,27 +30,64 @@ public class SignUp_GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        name_txt = new javax.swing.JTextField();
+        cpf_txt = new javax.swing.JTextField();
+        password_txt = new javax.swing.JPasswordField();
+        signUp_btn = new javax.swing.JButton();
+        goBack_btn = new javax.swing.JButton();
+        exit_btn = new javax.swing.JButton();
         SignUpBG_lbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        SignUpBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/SignUp.png"))); // NOI18N
+        jPanel1.setLayout(null);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(SignUpBG_lbl)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(SignUpBG_lbl)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        name_txt.setText("Nome");
+        jPanel1.add(name_txt);
+        name_txt.setBounds(170, 170, 280, 30);
+
+        cpf_txt.setText("CPF");
+        jPanel1.add(cpf_txt);
+        cpf_txt.setBounds(170, 120, 280, 30);
+
+        password_txt.setText("password");
+        jPanel1.add(password_txt);
+        password_txt.setBounds(170, 220, 280, 30);
+
+        signUp_btn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        signUp_btn.setText("CADASTRAR");
+        signUp_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signUp_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(signUp_btn);
+        signUp_btn.setBounds(170, 280, 280, 30);
+
+        goBack_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        goBack_btn.setText("VOLTAR");
+        goBack_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBack_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(goBack_btn);
+        goBack_btn.setBounds(390, 420, 90, 25);
+
+        exit_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        exit_btn.setText("SAIR");
+        exit_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit_btn);
+        exit_btn.setBounds(390, 460, 90, 25);
+
+        SignUpBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/SignUp.png"))); // NOI18N
+        jPanel1.add(SignUpBG_lbl);
+        SignUpBG_lbl.setBounds(0, 0, 500, 500);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,6 +103,23 @@ public class SignUp_GUI extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(500, 500));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void signUp_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUp_btnActionPerformed
+        if (main.Main.manager.signUp(cpf_txt.getText(), name_txt.getText(), password_txt.getText())){
+            JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO!");
+            Model.Funcs_DAO.changeScreen(this, new MainMenu_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "CADASTRO NAO REALIZADO!\nCPF ja cadastrado!");
+        }
+    }//GEN-LAST:event_signUp_btnActionPerformed
+
+    private void goBack_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBack_btnActionPerformed
+        Model.Funcs_DAO.changeScreen(this, new SetUp_GUI());
+    }//GEN-LAST:event_goBack_btnActionPerformed
+
+    private void exit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_btnActionPerformed
+        Model.Funcs_DAO.exit();
+    }//GEN-LAST:event_exit_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,6 +161,12 @@ public class SignUp_GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel SignUpBG_lbl;
+    private javax.swing.JTextField cpf_txt;
+    public static javax.swing.JButton exit_btn;
+    public static javax.swing.JButton goBack_btn;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField name_txt;
+    private javax.swing.JPasswordField password_txt;
+    private javax.swing.JButton signUp_btn;
     // End of variables declaration//GEN-END:variables
 }
