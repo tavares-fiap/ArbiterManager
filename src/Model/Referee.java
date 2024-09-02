@@ -13,24 +13,39 @@ public class Referee{
     private int totalMatchesOfficiated;
     private Map<Integer, Match> matchesOfficiated = new HashMap<>();
     private List<String> matchesTeamsAndIdentifier = new ArrayList<>();
-    private String level; //representara nivel de experiencia
-    private int matchId;
+    private String ranking; //representara nivel de experiencia
 
     public Referee(String cpf, String name, int totalMatchesOfficiated) {
         this.cpf = cpf;
         this.name = name;
         this.totalMatchesOfficiated = totalMatchesOfficiated;
-        if (totalMatchesOfficiated <= 50) {
-            this.level = "Bronze";
-        } else if (totalMatchesOfficiated <= 150) {
-            this.level = "Prata";
-        } else {
-            this.level = "Ouro";
-        }
+        defineRanking(this.totalMatchesOfficiated);
     }
     
-    public void setLevel(String level) {
-        this.level = level;
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getTotalMatchesOfficiated() {
+        return totalMatchesOfficiated;
+    }
+
+    public String getRanking() {
+        return ranking;
+    }
+    
+    private void defineRanking(int totalMatchesOfficiated){
+        if (totalMatchesOfficiated <= 50) {
+            this.ranking = "Bronze";
+        } else if (totalMatchesOfficiated <= 150) {
+            this.ranking = "Prata";
+        } else {
+            this.ranking = "Ouro";
+        }
     }
     
     private boolean isMatchIdTaken(int id) {
@@ -45,13 +60,18 @@ public class Referee{
     }
     
     public void addNewMatch(Match match){
-        this.matchId = matchesOfficiated.size();
+        int matchId = matchesOfficiated.keySet().size();
         this.matchesOfficiated.put(ensureUniqueMatchId(matchId), match);
-        this.matchesTeamsAndIdentifier.add(match.getHome() + " x " + match.getGuest() + " || " + totalMatchesOfficiated);
+        this.matchesTeamsAndIdentifier.add(match.getHome() + " x " + match.getGuest() + " || " + matchId);
         this.totalMatchesOfficiated += 1;
+        defineRanking(this.totalMatchesOfficiated);
     }
     
     public String[] getMatchesTeamsAndIdentifier() {
+        this.matchesTeamsAndIdentifier.clear();
+        for (int matchId : matchesOfficiated.keySet()) {
+            this.matchesTeamsAndIdentifier.add(this.getMatch(matchId).getHome() + " x " + this.getMatch(matchId).getGuest() + " || " + matchId);
+        }
         return matchesTeamsAndIdentifier.toArray(new String[matchesTeamsAndIdentifier.size()]);
     }
     
@@ -62,11 +82,22 @@ public class Referee{
     public void deleteMatch(int matchId){
         this.matchesOfficiated.remove(matchId);
         this.totalMatchesOfficiated -= 1;
+        defineRanking(this.totalMatchesOfficiated);
+    }
+    
+    public boolean hasRegisteredMatches(){
+        return !this.matchesOfficiated.isEmpty();
+    }
+    
+    public void updateInfo(String name, int totalMatchesOfficiated, String ranking){
+        this.name = name;
+        this.totalMatchesOfficiated = totalMatchesOfficiated;
+        this.ranking = ranking;
     }
     
     @Override
     public String toString(){
-        return "\nNome: " + this.name + "\nNivel: " + this.level + "\nJogos Apitados: " + this.totalMatchesOfficiated;
+        return "\nNome: " + this.name + "\nNivel: " + this.ranking + "\nJogos Apitados: " + this.totalMatchesOfficiated;
     }
     
 }

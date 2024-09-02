@@ -25,10 +25,15 @@ public class Match {
         return location;
     }
     
-    public void updateMatchInfo(String location, String home, String guest){
+    public void updateInfo(String location, String home, String guest){
         this.location = location;
         this.home = home;
         this.guest = guest;
+    }
+    
+    @Override
+    public String toString(){
+        return "\nMandante: " + this.home + "\nVisitante: " + this.guest + "\nLocal: " + this.location;
     }
     
     

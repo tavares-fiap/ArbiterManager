@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.Referee;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,12 +16,29 @@ import javax.swing.JOptionPane;
  * @author sapat
  */
 public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
-
+        private Referee referee;
     /**
      * Creates new form SetUp_GUI
      */
     public ReadUpdateDeleteReferee_GUI() {
         initComponents();
+        
+        refereeInfo_lbl.setVisible(false);
+        ranking_lbl.setVisible(false);
+        rankingList_cbx.setVisible(false);
+        cpf_lbl.setVisible(false);
+        matchesOfficiated_lbl.setVisible(false);
+        matchesOfficiated_txt.setVisible(false);
+        name_lbl.setVisible(false);
+        name_txt.setVisible(false);
+        update_btn.setVisible(false);
+        delete_btn.setVisible(false);
+        
+        refereesList_cbx.removeAllItems();
+        String [] refereesNamesAndIdentifiers = main.Main.refereeManager.getRefereesNamesAndIdentifier();
+        for (String nameAndIdentifier : refereesNamesAndIdentifiers) {
+            refereesList_cbx.addItem(nameAndIdentifier);
+        }
     }
 
     /**
@@ -33,6 +51,19 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        rankingList_cbx = new javax.swing.JComboBox();
+        whichReferee_lbl = new javax.swing.JLabel();
+        refereesList_cbx = new javax.swing.JComboBox();
+        sendReferee_btn = new javax.swing.JButton();
+        ranking_lbl = new javax.swing.JLabel();
+        cpf_lbl = new javax.swing.JLabel();
+        matchesOfficiated_lbl = new javax.swing.JLabel();
+        name_lbl = new javax.swing.JLabel();
+        name_txt = new javax.swing.JTextField();
+        matchesOfficiated_txt = new javax.swing.JTextField();
+        update_btn = new javax.swing.JButton();
+        delete_btn = new javax.swing.JButton();
+        refereeInfo_lbl = new javax.swing.JLabel();
         ReadUpdateDeleteRefereeBG_lbl = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mainMenuMenu_btn = new javax.swing.JMenu();
@@ -53,22 +84,106 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        ReadUpdateDeleteRefereeBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ReadUpdateDeleteReferee.png"))); // NOI18N
+        jPanel1.setLayout(null);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(ReadUpdateDeleteRefereeBG_lbl)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(ReadUpdateDeleteRefereeBG_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        rankingList_cbx.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rankingList_cbx.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ouro", "Prata", "Bronze" }));
+        rankingList_cbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rankingList_cbxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rankingList_cbx);
+        rankingList_cbx.setBounds(250, 240, 240, 30);
+
+        whichReferee_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        whichReferee_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        whichReferee_lbl.setText("Qual arbitro?");
+        jPanel1.add(whichReferee_lbl);
+        whichReferee_lbl.setBounds(30, 70, 240, 30);
+
+        refereesList_cbx.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        refereesList_cbx.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2" }));
+        refereesList_cbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refereesList_cbxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(refereesList_cbx);
+        refereesList_cbx.setBounds(30, 100, 330, 30);
+
+        sendReferee_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sendReferee_btn.setText("ENVIAR");
+        sendReferee_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendReferee_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sendReferee_btn);
+        sendReferee_btn.setBounds(370, 100, 110, 25);
+
+        ranking_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ranking_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        ranking_lbl.setText("Ranking:");
+        jPanel1.add(ranking_lbl);
+        ranking_lbl.setBounds(160, 240, 100, 30);
+
+        cpf_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cpf_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        cpf_lbl.setText("CPF:");
+        jPanel1.add(cpf_lbl);
+        cpf_lbl.setBounds(200, 340, 290, 30);
+
+        matchesOfficiated_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        matchesOfficiated_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        matchesOfficiated_lbl.setText("Partidas apitadas:");
+        jPanel1.add(matchesOfficiated_lbl);
+        matchesOfficiated_lbl.setBounds(80, 190, 180, 30);
+
+        name_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        name_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        name_lbl.setText("Nome:");
+        jPanel1.add(name_lbl);
+        name_lbl.setBounds(180, 290, 70, 30);
+
+        name_txt.setText("Nome do Arbitro");
+        jPanel1.add(name_txt);
+        name_txt.setBounds(250, 290, 240, 30);
+
+        matchesOfficiated_txt.setText("Total de partidas apitadas");
+        jPanel1.add(matchesOfficiated_txt);
+        matchesOfficiated_txt.setBounds(250, 190, 240, 30);
+
+        update_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        update_btn.setText("ALTERAR");
+        update_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(update_btn);
+        update_btn.setBounds(210, 410, 120, 30);
+
+        delete_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        delete_btn.setText("EXCLUIR");
+        delete_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(delete_btn);
+        delete_btn.setBounds(350, 410, 120, 30);
+
+        refereeInfo_lbl.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        refereeInfo_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        refereeInfo_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        refereeInfo_lbl.setText("---Informacoes do arbitro---");
+        jPanel1.add(refereeInfo_lbl);
+        refereeInfo_lbl.setBounds(30, 140, 440, 37);
+
+        ReadUpdateDeleteRefereeBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ReadUpdateDeleteReferee.png"))); // NOI18N
+        jPanel1.add(ReadUpdateDeleteRefereeBG_lbl);
+        ReadUpdateDeleteRefereeBG_lbl.setBounds(0, 0, 500, 480);
 
         mainMenuMenu_btn.setText("Menu");
 
@@ -236,6 +351,89 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_exitMenu_btnActionPerformed
 
+    private void refereesList_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refereesList_cbxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refereesList_cbxActionPerformed
+
+    private void sendReferee_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendReferee_btnActionPerformed
+        try {
+            String selectedReferee = (String) refereesList_cbx.getSelectedItem();
+            String refereesCpf = Model.Funcs_DAO.extractIdentifier(selectedReferee);
+            referee = main.Main.refereeManager.getReferee(refereesCpf);
+            System.out.println("Arbitro selecionado:-----" + referee);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR ESSE ARBITRO!\nCodigo do erro: " + e);
+        }
+
+        
+
+        try {
+            matchesOfficiated_txt.setText(Integer.toString(referee.getTotalMatchesOfficiated()));
+            name_txt.setText(referee.getName());
+            cpf_lbl.setText("CPF: " + referee.getCpf());
+            rankingList_cbx.setSelectedItem(referee.getRanking());
+            
+            refereeInfo_lbl.setVisible(true);
+            matchesOfficiated_lbl.setVisible(true);
+            matchesOfficiated_txt.setVisible(true);
+            name_lbl.setVisible(true);
+            name_txt.setVisible(true);
+            cpf_lbl.setVisible(true);
+            rankingList_cbx.setVisible(true);
+            ranking_lbl.setVisible(true);
+            update_btn.setVisible(true);
+            delete_btn.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR INFORMACOES DO ARBITRO!\nCodigo do erro: " + e);
+        }
+
+    }//GEN-LAST:event_sendReferee_btnActionPerformed
+
+    private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
+        String response = JOptionPane.showInputDialog(null, "Deseja realmente ALTERAR as informacoes do arbitro?\n1 - Sim\n2 - Cancelar");
+        if (Integer.parseInt(response) == 1) {
+            try{
+                referee.updateInfo(name_txt.getText(), Integer.parseInt(matchesOfficiated_txt.getText()), (String) rankingList_cbx.getSelectedItem());
+                JOptionPane.showMessageDialog(null, "INFORMACOES ATUALIZADAS COM SUCESSO!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO TENTAR ATUALIZAR INFORMACOES!\nCodigo do erro: " + e);
+            }
+        }
+
+    }//GEN-LAST:event_update_btnActionPerformed
+
+    private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
+        String response = JOptionPane.showInputDialog(null, "Deseja realmente EXCLUIR esse arbitro?\n1 - Sim\n2 - Cancelar");
+        if (Integer.parseInt(response) == 1) {
+            refereeInfo_lbl.setVisible(false);
+            ranking_lbl.setVisible(false);
+            rankingList_cbx.setVisible(false);
+            cpf_lbl.setVisible(false);
+            matchesOfficiated_lbl.setVisible(false);
+            matchesOfficiated_txt.setVisible(false);
+            name_lbl.setVisible(false);
+            name_txt.setVisible(false);
+            update_btn.setVisible(false);
+            delete_btn.setVisible(false);
+            try{
+                main.Main.refereeManager.deleteReferee(referee.getCpf()); 
+                refereesList_cbx.removeAllItems();
+                String [] refereesNamesAndIdentifiers = main.Main.refereeManager.getRefereesNamesAndIdentifier();
+                for (String nameAndIdentifier : refereesNamesAndIdentifiers) {
+                refereesList_cbx.addItem(nameAndIdentifier);
+                JOptionPane.showMessageDialog(null, "ARBITRO DELETADA!");
+        }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO TENTAR EXCLUIR PARTIDA!\nCodigo do erro: " + e);
+            }
+            
+        }
+    }//GEN-LAST:event_delete_btnActionPerformed
+
+    private void rankingList_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingList_cbxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rankingList_cbxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -284,6 +482,8 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem ReadUpdateDeleteReferee_btn;
     private javax.swing.JMenuItem addMatch_btn;
     private javax.swing.JMenuItem addReferee_btn;
+    private javax.swing.JLabel cpf_lbl;
+    public static javax.swing.JButton delete_btn;
     private javax.swing.JMenu exitMenu_btn;
     private javax.swing.JMenuItem exit_btn;
     private javax.swing.JMenuBar jMenuBar1;
@@ -292,9 +492,20 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem logout_btn;
     private javax.swing.JMenu mainMenuMenu_btn;
     private javax.swing.JMenuItem mainMenu_btn;
+    private javax.swing.JLabel matchesOfficiated_lbl;
+    private javax.swing.JTextField matchesOfficiated_txt;
     private javax.swing.JMenu matches_btn;
+    private javax.swing.JLabel name_lbl;
+    private javax.swing.JTextField name_txt;
     private javax.swing.JMenuItem notePad_btn;
+    public static javax.swing.JComboBox rankingList_cbx;
+    private javax.swing.JLabel ranking_lbl;
+    private javax.swing.JLabel refereeInfo_lbl;
+    public static javax.swing.JComboBox refereesList_cbx;
     private javax.swing.JMenu referees_btn;
+    public static javax.swing.JButton sendReferee_btn;
     private javax.swing.JMenu toolsMenu_btn;
+    public static javax.swing.JButton update_btn;
+    private javax.swing.JLabel whichReferee_lbl;
     // End of variables declaration//GEN-END:variables
 }

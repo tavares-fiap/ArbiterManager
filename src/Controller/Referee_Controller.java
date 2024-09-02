@@ -12,12 +12,12 @@ public class Referee_Controller {
     private Map<String, Referee> referees = new HashMap<>();
     private List<String> refereesNamesAndIdentifier = new ArrayList<>(); // para colocar na JComboBox
     
-    private boolean isRefereeRegistered(String cpf) {
+    private boolean isRefereeCpfRegistered(String cpf) {
         return referees.containsKey(cpf);
     }
     
     public boolean addNewReferee(String cpf, String name, int totalGamesOfficiated) {
-        if (!isRefereeRegistered(cpf)) {
+        if (!isRefereeCpfRegistered(cpf)) {
             referees.put(cpf, new Referee(cpf, name, totalGamesOfficiated));
             refereesNamesAndIdentifier.add(name + " || " + cpf);
             return true;
@@ -26,11 +26,19 @@ public class Referee_Controller {
     }
     
     public String[] getRefereesNamesAndIdentifier() {
+        refereesNamesAndIdentifier.clear();
+        for (String cpf : referees.keySet()) {
+            refereesNamesAndIdentifier.add(getReferee(cpf).getName() + " || " + cpf);
+        }
         return refereesNamesAndIdentifier.toArray(new String[refereesNamesAndIdentifier.size()]);
     }
     
     public Referee getReferee(String cpf){
         return referees.get(cpf);
+    }
+    
+    public void deleteReferee(String cpf){
+        this.referees.remove(cpf);
     }
     
     public boolean hasRegisteredReferees(){

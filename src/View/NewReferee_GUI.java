@@ -269,9 +269,8 @@ public class NewReferee_GUI extends javax.swing.JFrame {
             int totalGamesOfficiated = Integer.parseInt(totalGamesResponse);
             if (main.Main.refereeManager.addNewReferee(cpf_txt.getText(), name_txt.getText(), totalGamesOfficiated)){
                 JOptionPane.showMessageDialog(null, "ARBITRO ADICIONADO COM SUCESSO AO SISTEMA!");
-                Model.Funcs_DAO.changeScreen(this, new MainMenu_GUI());
             } else {
-                JOptionPane.showMessageDialog(null, "ARBITRO NAO CADASTRADO!\nCPF ja cadastrado!");
+                JOptionPane.showMessageDialog(null, "CADASTRO NAO REALIZADO!\nCPF ja cadastrado!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRO AO ADICIONAR ARBITRO!\nOcorreu um erro ao adicionar arbitro. \nCodigo do erro: " + e);

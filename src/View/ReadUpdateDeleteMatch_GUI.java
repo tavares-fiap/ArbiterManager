@@ -37,7 +37,7 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
         guest_lbl.setVisible(false);
         guest_txt.setVisible(false);
         location_lbl.setVisible(false);
-        location_lbl.setVisible(false);
+        location_txt.setVisible(false);
         update_btn.setVisible(false);
         delete_btn.setVisible(false);
         
@@ -401,7 +401,7 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
         guest_lbl.setVisible(false);
         guest_txt.setVisible(false);
         location_lbl.setVisible(false);
-        location_lbl.setVisible(false);
+        location_txt.setVisible(false);
         update_btn.setVisible(false);
         delete_btn.setVisible(false);
         
@@ -409,25 +409,36 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
         String refereesCpf = Model.Funcs_DAO.extractIdentifier(selectedReferee);
         referee = main.Main.refereeManager.getReferee(refereesCpf);
         
-        try {
-            matchesList_cbx.removeAllItems();
-            String [] matchesTeamsAndIdentifier = referee.getMatchesTeamsAndIdentifier();
-            for (String teamsAndIdentifier : matchesTeamsAndIdentifier) {
-                matchesList_cbx.addItem(teamsAndIdentifier);
+        System.out.println("Arbitro selecionado:-----" + referee);
+        
+        if (referee.hasRegisteredMatches()){
+            try {
+                matchesList_cbx.removeAllItems();
+                String [] matchesTeamsAndIdentifier = referee.getMatchesTeamsAndIdentifier();
+                for (String teamsAndIdentifier : matchesTeamsAndIdentifier) {
+                    matchesList_cbx.addItem(teamsAndIdentifier);
+                }
+                matchesList_cbx.setVisible(true);
+                whichMatch_lbl.setVisible(true);
+                sendMatch_btn.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR PARTIDAS!\nTalvez esse arbitro ainda nao possua partidas cadastradas\nCodigo do erro: " + e);
             }
-            matchesList_cbx.setVisible(true);
-            whichMatch_lbl.setVisible(true);
-            sendMatch_btn.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR PARTIDAS!\nTalvez esse arbitro ainda nao possua partidas cadastradas\nCodigo do erro: " + e);
+        } else {
+            JOptionPane.showMessageDialog(null, "ESSE ARBITRO NAO POSSUI PARTIDAS CADASTRADAS!");
         }
+        
 
     }//GEN-LAST:event_sendReferee_btnActionPerformed
 
     private void sendMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMatch_btnActionPerformed
         String selectedMatch = (String) matchesList_cbx.getSelectedItem();
         matchId = Model.Funcs_DAO.extractIdentifier(selectedMatch);
+        
         match = referee.getMatch(Integer.parseInt(matchId));
+        
+        System.out.println("Partida selecionada:-----" + match);
+        
         matchId_lbl.setText(matchId);
         home_txt.setText(match.getHome());
         guest_txt.setText(match.getGuest());
@@ -441,7 +452,7 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
         guest_lbl.setVisible(true);
         guest_txt.setVisible(true);
         location_lbl.setVisible(true);
-        location_lbl.setVisible(true);
+        location_txt.setVisible(true);
         update_btn.setVisible(true);
         delete_btn.setVisible(true);
     }//GEN-LAST:event_sendMatch_btnActionPerformed
@@ -453,7 +464,12 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
     private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
         String response = JOptionPane.showInputDialog(null, "Deseja realmente ALTERAR as informacoes da partida?\n1 - Sim\n2 - Cancelar");
         if (Integer.parseInt(response) == 1) {
-            match.updateMatchInfo(location_txt.getText(), home_txt.getText(), guest_txt.getText());
+            try{
+                match.updateInfo(location_txt.getText(), home_txt.getText(), guest_txt.getText());
+                JOptionPane.showMessageDialog(null, "PARTIDA ALTERADA!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO TENTAR ATUALIZAR INFORMACOES!\nCodigo do erro: " + e);
+            }
         }
         
     }//GEN-LAST:event_update_btnActionPerformed
@@ -472,10 +488,17 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
             guest_lbl.setVisible(false);
             guest_txt.setVisible(false);
             location_lbl.setVisible(false);
-            location_lbl.setVisible(false);
+            location_txt.setVisible(false);
             update_btn.setVisible(false);
             delete_btn.setVisible(false);
-            referee.deleteMatch(Integer.parseInt(matchId));   
+            
+            try{
+                referee.deleteMatch(Integer.parseInt(matchId)); 
+                JOptionPane.showMessageDialog(null, "PARTIDA DELETADA!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO TENTAR EXCLUIR PARTIDA!\nCodigo do erro: " + e);
+            }
+            
         }
     }//GEN-LAST:event_delete_btnActionPerformed
 

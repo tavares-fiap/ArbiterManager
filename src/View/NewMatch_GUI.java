@@ -312,6 +312,7 @@ public class NewMatch_GUI extends javax.swing.JFrame {
             String refereesCpf = Model.Funcs_DAO.extractIdentifier(selectedReferee);
             Referee referee = main.Main.refereeManager.getReferee(refereesCpf);
             referee.addNewMatch(new Match(location_txt.getText(), home_txt.getText(), guest_txt.getText()));
+            JOptionPane.showMessageDialog(null, "PARTIDA CADASTRADA COM SUCESSO!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO CADASTRAR PARTIDA!\nOcorreu um erro ao cadastrar partida, revise as informacoes!\nCodigo do erro: " + e);
         }
