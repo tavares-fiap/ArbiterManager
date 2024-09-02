@@ -361,30 +361,27 @@ public class ReadUpdateDeleteReferee_GUI extends javax.swing.JFrame {
             String refereesCpf = Model.Funcs_DAO.extractIdentifier(selectedReferee);
             referee = main.Main.refereeManager.getReferee(refereesCpf);
             System.out.println("Arbitro selecionado:-----" + referee);
+            try {
+                matchesOfficiated_txt.setText(Integer.toString(referee.getTotalMatchesOfficiated()));
+                name_txt.setText(referee.getName());
+                cpf_lbl.setText("CPF: " + referee.getCpf());
+                rankingList_cbx.setSelectedItem(referee.getRanking());
+
+                refereeInfo_lbl.setVisible(true);
+                matchesOfficiated_lbl.setVisible(true);
+                matchesOfficiated_txt.setVisible(true);
+                name_lbl.setVisible(true);
+                name_txt.setVisible(true);
+                cpf_lbl.setVisible(true);
+                rankingList_cbx.setVisible(true);
+                ranking_lbl.setVisible(true);
+                update_btn.setVisible(true);
+                delete_btn.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR INFORMACOES DO ARBITRO!\nCodigo do erro: " + e);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR ESSE ARBITRO!\nCodigo do erro: " + e);
-        }
-
-        
-
-        try {
-            matchesOfficiated_txt.setText(Integer.toString(referee.getTotalMatchesOfficiated()));
-            name_txt.setText(referee.getName());
-            cpf_lbl.setText("CPF: " + referee.getCpf());
-            rankingList_cbx.setSelectedItem(referee.getRanking());
-            
-            refereeInfo_lbl.setVisible(true);
-            matchesOfficiated_lbl.setVisible(true);
-            matchesOfficiated_txt.setVisible(true);
-            name_lbl.setVisible(true);
-            name_txt.setVisible(true);
-            cpf_lbl.setVisible(true);
-            rankingList_cbx.setVisible(true);
-            ranking_lbl.setVisible(true);
-            update_btn.setVisible(true);
-            delete_btn.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR INFORMACOES DO ARBITRO!\nCodigo do erro: " + e);
         }
 
     }//GEN-LAST:event_sendReferee_btnActionPerformed
