@@ -5,6 +5,8 @@
  */
 package View;
 
+import Model.Match;
+import Model.Referee;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,12 +17,35 @@ import javax.swing.JOptionPane;
  * @author sapat
  */
 public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
-
+        private Referee referee;
+        private Match match;
+        private String matchId;
     /**
      * Creates new form SetUp_GUI
      */
     public ReadUpdateDeleteMatch_GUI() {
         initComponents();
+        matchesList_cbx.setVisible(false);
+        whichMatch_lbl.setVisible(false);
+        sendMatch_btn.setVisible(false);
+        
+        matchInfo_lbl.setVisible(false);
+        id_lbl.setVisible(false);
+        matchId_lbl.setVisible(false);
+        home_lbl.setVisible(false);
+        home_txt.setVisible(false);
+        guest_lbl.setVisible(false);
+        guest_txt.setVisible(false);
+        location_lbl.setVisible(false);
+        location_lbl.setVisible(false);
+        update_btn.setVisible(false);
+        delete_btn.setVisible(false);
+        
+        refereesList_cbx.removeAllItems();
+        String [] refereesNamesAndIdentifiers = main.Main.refereeManager.getRefereesNamesAndIdentifier();
+        for (String nameAndIdentifier : refereesNamesAndIdentifiers) {
+            refereesList_cbx.addItem(nameAndIdentifier);
+        }
     }
 
     /**
@@ -33,6 +58,23 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        delete_btn = new javax.swing.JButton();
+        update_btn = new javax.swing.JButton();
+        matchId_lbl = new javax.swing.JLabel();
+        id_lbl = new javax.swing.JLabel();
+        location_txt = new javax.swing.JTextField();
+        guest_txt = new javax.swing.JTextField();
+        home_txt = new javax.swing.JTextField();
+        location_lbl = new javax.swing.JLabel();
+        guest_lbl = new javax.swing.JLabel();
+        home_lbl = new javax.swing.JLabel();
+        matchInfo_lbl = new javax.swing.JLabel();
+        sendMatch_btn = new javax.swing.JButton();
+        matchesList_cbx = new javax.swing.JComboBox();
+        whichMatch_lbl = new javax.swing.JLabel();
+        refereesList_cbx = new javax.swing.JComboBox();
+        whichReferee_lbl = new javax.swing.JLabel();
+        sendReferee_btn = new javax.swing.JButton();
         ReadUpdateDeleteMatchBG_lbl = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mainMenuMenu_btn = new javax.swing.JMenu();
@@ -53,22 +95,132 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        ReadUpdateDeleteMatchBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ReadUpdateDeleteMatch.png"))); // NOI18N
+        jPanel1.setLayout(null);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(ReadUpdateDeleteMatchBG_lbl)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(ReadUpdateDeleteMatchBG_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        delete_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        delete_btn.setText("EXCLUIR");
+        delete_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(delete_btn);
+        delete_btn.setBounds(350, 410, 120, 30);
+
+        update_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        update_btn.setText("ALTERAR");
+        update_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(update_btn);
+        update_btn.setBounds(210, 410, 120, 30);
+
+        matchId_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        matchId_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        matchId_lbl.setText("12345");
+        jPanel1.add(matchId_lbl);
+        matchId_lbl.setBounds(280, 240, 200, 30);
+
+        id_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        id_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        id_lbl.setText("ID:");
+        jPanel1.add(id_lbl);
+        id_lbl.setBounds(170, 240, 110, 30);
+
+        location_txt.setText("Localizacao");
+        jPanel1.add(location_txt);
+        location_txt.setBounds(280, 360, 210, 30);
+
+        guest_txt.setText("Time Visitante");
+        jPanel1.add(guest_txt);
+        guest_txt.setBounds(280, 320, 210, 30);
+
+        home_txt.setText("Time Mandante");
+        jPanel1.add(home_txt);
+        home_txt.setBounds(280, 280, 210, 30);
+
+        location_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        location_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        location_lbl.setText("Local:");
+        jPanel1.add(location_lbl);
+        location_lbl.setBounds(170, 360, 110, 30);
+
+        guest_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        guest_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        guest_lbl.setText("Visitante:");
+        jPanel1.add(guest_lbl);
+        guest_lbl.setBounds(170, 320, 110, 30);
+
+        home_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        home_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        home_lbl.setText("Mandante:");
+        jPanel1.add(home_lbl);
+        home_lbl.setBounds(170, 280, 110, 30);
+
+        matchInfo_lbl.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        matchInfo_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        matchInfo_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        matchInfo_lbl.setText("---Informacoes da partida---");
+        jPanel1.add(matchInfo_lbl);
+        matchInfo_lbl.setBounds(30, 193, 440, 37);
+
+        sendMatch_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sendMatch_btn.setText("ENVIAR");
+        sendMatch_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendMatch_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sendMatch_btn);
+        sendMatch_btn.setBounds(370, 160, 110, 25);
+
+        matchesList_cbx.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        matchesList_cbx.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2" }));
+        matchesList_cbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                matchesList_cbxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(matchesList_cbx);
+        matchesList_cbx.setBounds(30, 160, 330, 30);
+
+        whichMatch_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        whichMatch_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        whichMatch_lbl.setText("Qual partida desse arbitro?");
+        jPanel1.add(whichMatch_lbl);
+        whichMatch_lbl.setBounds(30, 130, 290, 30);
+
+        refereesList_cbx.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        refereesList_cbx.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2" }));
+        refereesList_cbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refereesList_cbxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(refereesList_cbx);
+        refereesList_cbx.setBounds(30, 100, 330, 30);
+
+        whichReferee_lbl.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        whichReferee_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        whichReferee_lbl.setText("Qual arbitro?");
+        jPanel1.add(whichReferee_lbl);
+        whichReferee_lbl.setBounds(30, 70, 240, 30);
+
+        sendReferee_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sendReferee_btn.setText("ENVIAR");
+        sendReferee_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendReferee_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sendReferee_btn);
+        sendReferee_btn.setBounds(370, 100, 110, 25);
+
+        ReadUpdateDeleteMatchBG_lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ReadUpdateDeleteMatch.png"))); // NOI18N
+        jPanel1.add(ReadUpdateDeleteMatchBG_lbl);
+        ReadUpdateDeleteMatchBG_lbl.setBounds(0, 0, 500, 480);
 
         mainMenuMenu_btn.setText("Menu");
 
@@ -236,6 +388,97 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_exitMenu_btnActionPerformed
 
+    private void refereesList_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refereesList_cbxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refereesList_cbxActionPerformed
+
+    private void sendReferee_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendReferee_btnActionPerformed
+        matchInfo_lbl.setVisible(false);
+        id_lbl.setVisible(false);
+        matchId_lbl.setVisible(false);
+        home_lbl.setVisible(false);
+        home_txt.setVisible(false);
+        guest_lbl.setVisible(false);
+        guest_txt.setVisible(false);
+        location_lbl.setVisible(false);
+        location_lbl.setVisible(false);
+        update_btn.setVisible(false);
+        delete_btn.setVisible(false);
+        
+        String selectedReferee = (String) refereesList_cbx.getSelectedItem();
+        String refereesCpf = Model.Funcs_DAO.extractIdentifier(selectedReferee);
+        referee = main.Main.refereeManager.getReferee(refereesCpf);
+        
+        try {
+            matchesList_cbx.removeAllItems();
+            String [] matchesTeamsAndIdentifier = referee.getMatchesTeamsAndIdentifier();
+            for (String teamsAndIdentifier : matchesTeamsAndIdentifier) {
+                matchesList_cbx.addItem(teamsAndIdentifier);
+            }
+            matchesList_cbx.setVisible(true);
+            whichMatch_lbl.setVisible(true);
+            sendMatch_btn.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "OCORREU UM ERRO AO PROCURAR PARTIDAS!\nTalvez esse arbitro ainda nao possua partidas cadastradas\nCodigo do erro: " + e);
+        }
+
+    }//GEN-LAST:event_sendReferee_btnActionPerformed
+
+    private void sendMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMatch_btnActionPerformed
+        String selectedMatch = (String) matchesList_cbx.getSelectedItem();
+        matchId = Model.Funcs_DAO.extractIdentifier(selectedMatch);
+        match = referee.getMatch(Integer.parseInt(matchId));
+        matchId_lbl.setText(matchId);
+        home_txt.setText(match.getHome());
+        guest_txt.setText(match.getGuest());
+        location_txt.setText(match.getLocation());
+        
+        matchInfo_lbl.setVisible(true);
+        id_lbl.setVisible(true);
+        matchId_lbl.setVisible(true);
+        home_lbl.setVisible(true);
+        home_txt.setVisible(true);
+        guest_lbl.setVisible(true);
+        guest_txt.setVisible(true);
+        location_lbl.setVisible(true);
+        location_lbl.setVisible(true);
+        update_btn.setVisible(true);
+        delete_btn.setVisible(true);
+    }//GEN-LAST:event_sendMatch_btnActionPerformed
+
+    private void matchesList_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matchesList_cbxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_matchesList_cbxActionPerformed
+
+    private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
+        String response = JOptionPane.showInputDialog(null, "Deseja realmente ALTERAR as informacoes da partida?\n1 - Sim\n2 - Cancelar");
+        if (Integer.parseInt(response) == 1) {
+            match.updateMatchInfo(location_txt.getText(), home_txt.getText(), guest_txt.getText());
+        }
+        
+    }//GEN-LAST:event_update_btnActionPerformed
+
+    private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
+        String response = JOptionPane.showInputDialog(null, "Deseja realmente EXCLUIR essa partida?\n1 - Sim\n2 - Cancelar");
+        if (Integer.parseInt(response) == 1) {
+            matchesList_cbx.setVisible(false);
+            whichMatch_lbl.setVisible(false);
+            sendMatch_btn.setVisible(false);
+            matchInfo_lbl.setVisible(false);
+            id_lbl.setVisible(false);
+            matchId_lbl.setVisible(false);
+            home_lbl.setVisible(false);
+            home_txt.setVisible(false);
+            guest_lbl.setVisible(false);
+            guest_txt.setVisible(false);
+            location_lbl.setVisible(false);
+            location_lbl.setVisible(false);
+            update_btn.setVisible(false);
+            delete_btn.setVisible(false);
+            referee.deleteMatch(Integer.parseInt(matchId));   
+        }
+    }//GEN-LAST:event_delete_btnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,17 +535,34 @@ public class ReadUpdateDeleteMatch_GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem ReadUpdateDeleteReferee_btn;
     private javax.swing.JMenuItem addMatch_btn;
     private javax.swing.JMenuItem addReferee_btn;
+    public static javax.swing.JButton delete_btn;
     private javax.swing.JMenu exitMenu_btn;
     private javax.swing.JMenuItem exit_btn;
+    private javax.swing.JLabel guest_lbl;
+    private javax.swing.JTextField guest_txt;
+    private javax.swing.JLabel home_lbl;
+    private javax.swing.JTextField home_txt;
+    private javax.swing.JLabel id_lbl;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel location_lbl;
+    private javax.swing.JTextField location_txt;
     private javax.swing.JMenu logoutMenu_btn;
     private javax.swing.JMenuItem logout_btn;
     private javax.swing.JMenu mainMenuMenu_btn;
     private javax.swing.JMenuItem mainMenu_btn;
+    private javax.swing.JLabel matchId_lbl;
+    private javax.swing.JLabel matchInfo_lbl;
+    public static javax.swing.JComboBox matchesList_cbx;
     private javax.swing.JMenu matches_btn;
     private javax.swing.JMenuItem notePad_btn;
+    public static javax.swing.JComboBox refereesList_cbx;
     private javax.swing.JMenu referees_btn;
+    public static javax.swing.JButton sendMatch_btn;
+    public static javax.swing.JButton sendReferee_btn;
     private javax.swing.JMenu toolsMenu_btn;
+    public static javax.swing.JButton update_btn;
+    private javax.swing.JLabel whichMatch_lbl;
+    private javax.swing.JLabel whichReferee_lbl;
     // End of variables declaration//GEN-END:variables
 }

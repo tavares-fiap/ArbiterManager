@@ -32,8 +32,8 @@ public class Referee_Controller {
     public Referee getReferee(String cpf){
         return referees.get(cpf);
     }
-    public String extractIdentifier(String nameAndIdentifier) {
-        String[] splitedNameAndIdentifier = nameAndIdentifier.split(" ");
-        return splitedNameAndIdentifier[splitedNameAndIdentifier.length - 1]; 
+    
+    public boolean hasRegisteredReferees(){
+        return !referees.isEmpty();
     }
 }

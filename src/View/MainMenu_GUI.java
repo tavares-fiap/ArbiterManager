@@ -214,11 +214,19 @@ public class MainMenu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_notePad_btnActionPerformed
 
     private void addMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMatch_btnActionPerformed
-        Model.Funcs_DAO.changeScreen(this, new NewMatch_GUI());
+        if (main.Main.refereeManager.hasRegisteredReferees()) {
+            Model.Funcs_DAO.changeScreen(this, new NewMatch_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "NENHUM ARBITRO CADASTRADO!\nIMPOSSIVEL CADASTRAR NOVA PARTIDA");
+        }
     }//GEN-LAST:event_addMatch_btnActionPerformed
 
     private void ReadUpdateDeleteMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadUpdateDeleteMatch_btnActionPerformed
-        Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteMatch_GUI());
+        if (main.Main.refereeManager.hasRegisteredReferees()) {
+            Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteMatch_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "NENHUM ARBITRO CADASTRADO!\nIMPOSSIVEL ACESSAR PARTIDAS");
+        }
     }//GEN-LAST:event_ReadUpdateDeleteMatch_btnActionPerformed
 
     private void addReferee_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferee_btnActionPerformed
@@ -226,7 +234,12 @@ public class MainMenu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addReferee_btnActionPerformed
 
     private void ReadUpdateDeleteReferee_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadUpdateDeleteReferee_btnActionPerformed
-        Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteReferee_GUI());
+        if (main.Main.refereeManager.hasRegisteredReferees()) {
+            Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteReferee_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "NENHUM ARBITRO CADASTRADO!");
+        }
+        
     }//GEN-LAST:event_ReadUpdateDeleteReferee_btnActionPerformed
 
     private void mainMenu_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenu_btnActionPerformed

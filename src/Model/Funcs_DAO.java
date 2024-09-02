@@ -17,4 +17,9 @@ public class Funcs_DAO {
             System.exit(0);
         }
     }
+    
+    public static String extractIdentifier(String stringWithIdentifier) {
+        String[] splitedNameAndIdentifier = stringWithIdentifier.split(" ");
+        return splitedNameAndIdentifier[splitedNameAndIdentifier.length - 1]; 
+    }
 }

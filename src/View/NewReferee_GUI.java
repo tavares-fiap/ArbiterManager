@@ -219,15 +219,27 @@ public class NewReferee_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addReferee_btnActionPerformed
 
     private void ReadUpdateDeleteReferee_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadUpdateDeleteReferee_btnActionPerformed
-        Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteReferee_GUI());
+        if (main.Main.refereeManager.hasRegisteredReferees()) {
+            Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteReferee_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "NENHUM ARBITRO CADASTRADO!");
+        }
     }//GEN-LAST:event_ReadUpdateDeleteReferee_btnActionPerformed
 
     private void addMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMatch_btnActionPerformed
-        Model.Funcs_DAO.changeScreen(this, new NewMatch_GUI());
+        if (main.Main.refereeManager.hasRegisteredReferees()) {
+            Model.Funcs_DAO.changeScreen(this, new NewMatch_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "NENHUM ARBITRO CADASTRADO!\nIMPOSSIVEL CADASTRAR NOVA PARTIDA");
+        }
     }//GEN-LAST:event_addMatch_btnActionPerformed
 
     private void ReadUpdateDeleteMatch_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadUpdateDeleteMatch_btnActionPerformed
-        Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteMatch_GUI());
+        if (main.Main.refereeManager.hasRegisteredReferees()) {
+            Model.Funcs_DAO.changeScreen(this, new ReadUpdateDeleteMatch_GUI());
+        } else {
+            JOptionPane.showMessageDialog(null, "NENHUM ARBITRO CADASTRADO!\nIMPOSSIVEL ACESSAR PARTIDAS");
+        }
     }//GEN-LAST:event_ReadUpdateDeleteMatch_btnActionPerformed
 
     private void logout_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_btnActionPerformed

@@ -309,7 +309,7 @@ public class NewMatch_GUI extends javax.swing.JFrame {
     private void send_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_btnActionPerformed
         try {
             String selectedReferee = (String) refereesList_cbx.getSelectedItem();
-            String refereesCpf = main.Main.refereeManager.extractIdentifier(selectedReferee);
+            String refereesCpf = Model.Funcs_DAO.extractIdentifier(selectedReferee);
             Referee referee = main.Main.refereeManager.getReferee(refereesCpf);
             referee.addNewMatch(new Match(location_txt.getText(), home_txt.getText(), guest_txt.getText()));
         } catch (Exception e) {

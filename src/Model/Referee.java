@@ -1,7 +1,9 @@
 
 package Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -10,7 +12,9 @@ public class Referee{
     private String name;
     private int totalMatchesOfficiated;
     private Map<Integer, Match> matchesOfficiated = new HashMap<>();
+    private List<String> matchesTeamsAndIdentifier = new ArrayList<>();
     private String level; //representara nivel de experiencia
+    private int matchId;
 
     public Referee(String cpf, String name, int totalMatchesOfficiated) {
         this.cpf = cpf;
@@ -29,9 +33,35 @@ public class Referee{
         this.level = level;
     }
     
+    private boolean isMatchIdTaken(int id) {
+        return matchesOfficiated.containsKey(id);
+    }
+    
+    private int ensureUniqueMatchId(int id) {
+        while (isMatchIdTaken(id)) {
+            id++;
+        }
+        return id;
+    }
+    
     public void addNewMatch(Match match){
-        matchesOfficiated.put(totalMatchesOfficiated, match);
-        totalMatchesOfficiated += 1;
+        this.matchId = matchesOfficiated.size();
+        this.matchesOfficiated.put(ensureUniqueMatchId(matchId), match);
+        this.matchesTeamsAndIdentifier.add(match.getHome() + " x " + match.getGuest() + " || " + totalMatchesOfficiated);
+        this.totalMatchesOfficiated += 1;
+    }
+    
+    public String[] getMatchesTeamsAndIdentifier() {
+        return matchesTeamsAndIdentifier.toArray(new String[matchesTeamsAndIdentifier.size()]);
+    }
+    
+    public Match getMatch(int id){
+        return this.matchesOfficiated.get(id);
+    }
+    
+    public void deleteMatch(int matchId){
+        this.matchesOfficiated.remove(matchId);
+        this.totalMatchesOfficiated -= 1;
     }
     
     @Override
